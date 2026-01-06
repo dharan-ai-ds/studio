@@ -104,5 +104,57 @@ mockIssues.unshift(
     createdAt: new Date('2024-07-15T11:00:00Z'),
     imageUrl: 'https://picsum.photos/seed/waterlogging-velachery/600/400',
     imageHint: 'flooded street'
+  },
+  {
+    id: 'issue-104',
+    title: 'Neglected public park in Adyar',
+    description: 'The local park in Adyar is in a state of disrepair, with overgrown weeds, broken benches, and non-functional lighting, making it unsafe for families.',
+    category: 'Parks',
+    status: 'Open',
+    location: 'Adyar',
+    reporter: { id: 'user-5', name: 'Vikram Singh' },
+    upvotes: 88,
+    createdAt: new Date('2024-07-22T18:00:00Z'),
+    imageUrl: 'https://picsum.photos/seed/park-neglect/600/400',
+    imageHint: 'neglected park'
+  },
+  {
+    id: 'issue-105',
+    title: 'Severe traffic congestion at Guindy',
+    description: 'Daily traffic jams at the Guindy intersection during peak hours are causing long delays and significant air pollution. Signal timing needs to be re-evaluated.',
+    category: 'Roads',
+    status: 'In Progress',
+    location: 'Guindy',
+    reporter: { id: 'user-1', name: 'Arun Kumar' },
+    upvotes: 302,
+    createdAt: new Date('2024-07-22T08:30:00Z'),
+    imageUrl: 'https://picsum.photos/seed/traffic-congestion/600/400',
+    imageHint: 'traffic jam'
+  },
+  {
+    id: 'issue-106',
+    title: 'Broken pavement in Mylapore',
+    description: 'The pavement along the main road in Mylapore is badly broken, making it difficult and dangerous for pedestrians, especially the elderly, to walk.',
+    category: 'Roads',
+    status: 'Open',
+    location: 'Mylapore',
+    reporter: { id: 'user-2', name: 'Priya Sharma' },
+    upvotes: 150,
+    createdAt: new Date('2024-07-21T11:45:00Z'),
+    imageUrl: 'https://picsum.photos/seed/broken-pavement/600/400',
+    imageHint: 'broken pavement'
+  },
+  {
+    id: 'issue-107',
+    title: 'Illegal parking in Besant Nagar',
+    description: 'Cars are being parked illegally on both sides of the narrow residential streets in Besant Nagar, causing blockages and access problems for residents.',
+    category: 'Public Safety',
+    status: 'Resolved',
+    location: 'Besant Nagar',
+    reporter: { id: 'user-4', name: 'Anjali Mehta' },
+    upvotes: 64,
+    createdAt: new Date('2024-07-19T16:00:00Z'),
+    imageUrl: 'https://picsum.photos/seed/illegal-parking/600/400',
+    imageHint: 'illegal parking'
   }
 );
