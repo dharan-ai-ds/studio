@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "garbage-marina",
+      "description": "Uncollected garbage near Marina Beach",
+      "imageUrl": "https://images.unsplash.com/photo-1556566304-3f8d4bc2f00b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxnYXJiYWdlJTIwYmVhY2h8ZW58MHx8fHwxNzY3NzE3OTg3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "garbage beach"
+    },
+    {
+      "id": "streetlight-tnagar",
+      "description": "Broken streetlight in T. Nagar",
+      "imageUrl": "https://images.unsplash.com/photo-1719036723449-37680727c0e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxicm9rZW4lMjBzdHJlZXRsaWdodHxlbnwwfHx8fDE3Njc2OTM0NzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "broken streetlight"
+    },
+    {
+      "id": "pothole-annasalai",
+      "description": "Pothole on Anna Salai Road",
+      "imageUrl": "https://images.unsplash.com/photo-1748772860747-6c09dbc72dd0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwb3Rob2xlJTIwcm9hZHxlbnwwfHx8fDE3Njc2OTM0NzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pothole road"
+    },
+    {
+      "id": "waterlogging-velachery",
+      "description": "Waterlogging in Velachery",
+      "imageUrl": "https://images.unsplash.com/photo-1657069342866-2d11c2509b02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmbG9vZGVkJTIwc3RyZWV0fGVufDB8fHx8MTc2NzYxNjY4Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "flooded street"
+    },
+    {
+      "id": "park-neglect",
+      "description": "Neglected public park in Adyar",
+      "imageUrl": "https://images.unsplash.com/photo-1718542590496-ecd3808c9b8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxuZWdsZWN0ZWQlMjBwYXJrfGVufDB8fHx8MTc2NzcxNzk4NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "neglected park"
+    },
+    {
+      "id": "traffic-congestion",
+      "description": "Severe traffic congestion at Guindy",
+      "imageUrl": "https://images.unsplash.com/photo-1687781816826-1db1ba9aaf4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx0cmFmZmljJTIwamFtfGVufDB8fHx8MTc2NzcxNzk4NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "traffic jam"
+    },
+    {
+      "id": "broken-pavement",
+      "description": "Broken pavement causing accessibility issues",
+      "imageUrl": "https://images.unsplash.com/photo-1752533479974-f7a096764bc4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxicm9rZW4lMjBwYXZlbWVudHxlbnwwfHx8fDE3Njc3MTc5ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "broken pavement"
+    },
+    {
+      "id": "illegal-parking",
+      "description": "Illegal parking blocking a residential street",
+      "imageUrl": "https://images.unsplash.com/photo-1718658278008-eab329d81a0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxpbGxlZ2FsJTIwcGFya2luZ3xlbnwwfHx8fDE3Njc3MTc5ODV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "illegal parking"
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,8 +29,8 @@ const formSchema = z.object({
     .min(6, { message: "Password must be at least 6 characters." }),
 });
 
-export default function LoginPage() {
-  const { user, login, loading } = useAuth();
+export default function SignupPage() {
+  const { signup } = useAuth();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -43,39 +43,25 @@ export default function LoginPage() {
     },
   });
 
-  useEffect(() => {
-    if (!loading && user) {
-      router.push("/dashboard");
-    }
-  }, [user, loading, router]);
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     try {
-      await login(values.email, values.password);
+      await signup(values.email, values.password);
       router.push("/dashboard");
     } catch (error: any) {
       let errorMessage = "An unexpected error occurred. Please try again.";
-      if (error.code === "auth/invalid-credential") {
-        errorMessage = "Invalid email or password. Please try again.";
+      if (error.code === "auth/email-already-in-use") {
+        errorMessage = "This email is already registered. Please log in instead.";
       }
       toast({
-        title: "Login Failed",
+        title: "Sign Up Failed",
         description: errorMessage,
         variant: "destructive",
       });
-      console.error("Login error:", error);
+      console.error("Signup error:", error);
     } finally {
       setIsSubmitting(false);
     }
-  }
-
-  if (loading || user) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
   }
 
   return (
@@ -84,10 +70,10 @@ export default function LoginPage() {
         <div className="mb-8 flex flex-col items-center text-center">
           <Icons.logo className="h-12 w-12 text-primary" />
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground">
-            Welcome to CommunityPulse
+            Create an Account
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Sign in to your account to continue
+            Join CommunityPulse and make your voice heard
           </p>
         </div>
         <div className="rounded-lg border bg-card p-6 shadow-sm">
@@ -139,31 +125,20 @@ export default function LoginPage() {
                 {isSubmitting && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Sign In
+                Sign Up
               </Button>
             </form>
           </Form>
         </div>
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          Don't have an account?{" "}
+          Already have an account?{" "}
           <Link
-            href="/signup"
+            href="/"
             className="font-medium text-primary underline-offset-4 hover:underline"
           >
-            Sign up
+            Sign in
           </Link>
         </p>
-        <div className="mt-4 text-center text-xs text-muted-foreground">
-          <p>
-            For demo, you can use:
-            <br />
-            <span className="font-mono">test@example.com</span> /{" "}
-            <span className="font-mono">password</span>
-          </p>
-          <p className="mt-1">
-            (If the test account doesn't exist, it will be created.)
-          </p>
-        </div>
       </div>
     </div>
   );
