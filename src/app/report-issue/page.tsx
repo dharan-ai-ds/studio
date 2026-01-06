@@ -28,6 +28,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { IssueCategory } from "@/lib/types";
+import { suggestIssueCategory } from "@/ai/flows/suggest-issue-category";
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -49,14 +50,14 @@ const formSchema = z.object({
   ]),
 });
 
-const categoryKeywords: { [key in IssueCategory]: string[] } = {
-  "Roads": ["road", "pothole", "pavement", "street", "traffic"],
-  "Waste Management": ["garbage", "waste", "trash", "dumping", "bin"],
-  "Water Supply": ["water", "pipe", "leak", "sewage", "drainage"],
-  "Public Safety": ["light", "streetlight", "safety", "crime", "exposed wire"],
-  "Parks": ["park", "playground", "garden"],
-  "Other": [],
-};
+const issueCategories: IssueCategory[] = [
+    "Roads",
+    "Waste Management",
+    "Water Supply",
+    "Public Safety",
+    "Parks",
+    "Other",
+];
 
 export default function ReportIssuePage() {
   const { toast } = useToast();
@@ -87,26 +88,35 @@ export default function ReportIssuePage() {
     }, 1500);
   }
 
-  function handleSuggestCategory() {
-    setIsSuggesting(true);
-    const description = form.getValues("description").toLowerCase();
+  async function handleSuggestCategory() {
+    const description = form.getValues("description");
+    if (description.length < 20) {
+      form.setError("description", {
+        type: "manual",
+        message: "Please enter at least 20 characters to get a suggestion.",
+      });
+      return;
+    }
     
-    // Simulate AI suggestion
-    setTimeout(() => {
-      let suggestedCategory: IssueCategory = "Other";
-      for (const [category, keywords] of Object.entries(categoryKeywords)) {
-        if (keywords.some(keyword => description.includes(keyword))) {
-          suggestedCategory = category as IssueCategory;
-          break;
-        }
-      }
+    setIsSuggesting(true);
+    try {
+      const result = await suggestIssueCategory({ description });
+      const suggestedCategory = result.category;
       form.setValue("category", suggestedCategory);
       toast({
         title: "AI Suggestion",
         description: `We've suggested the '${suggestedCategory}' category based on your description.`,
       });
-      setIsSuggesting(false);
-    }, 1000);
+    } catch(e) {
+        console.error(e);
+        toast({
+            title: "AI Suggestion Failed",
+            description: "We couldn't suggest a category. Please select one manually.",
+            variant: "destructive"
+        });
+    } finally {
+        setIsSuggesting(false);
+    }
   }
 
   return (
@@ -177,7 +187,7 @@ export default function ReportIssuePage() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {Object.keys(categoryKeywords).map(cat => (
+                        {issueCategories.map(cat => (
                            <SelectItem key={cat} value={cat}>{cat}</SelectItem>
                         ))}
                       </SelectContent>
