@@ -4,27 +4,33 @@ import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { mockIssues } from "@/lib/data";
-import { ThumbsUp, MessageSquare } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
+// Get the initial set of issues outside the component to ensure it's the same on server and client
+const initialIssues = mockIssues.slice(0, 5);
+
 export default function LiveFeed() {
-  const [latestIssues, setLatestIssues] = useState(
-    mockIssues.slice(0, 5)
-  );
+  const [latestIssues, setLatestIssues] = useState(initialIssues);
   
   // This useEffect simulates a live feed by cycling through mock data.
   // In a real app, this would be a WebSocket or real-time subscription.
   useEffect(() => {
     const interval = setInterval(() => {
       setLatestIssues(prevIssues => {
-        const newIssueIndex = Math.floor(Math.random() * mockIssues.length);
-        const newIssue = mockIssues[newIssueIndex];
+        // Find an issue from the full mock list that isn't already in the latest issues
+        const availableIssues = mockIssues.filter(
+          mockIssue => !prevIssues.some(latestIssue => latestIssue.id === mockIssue.id)
+        );
         
-        // Avoid adding duplicate issues
-        if (prevIssues.some(issue => issue.id === newIssue.id)) {
-          return prevIssues;
+        if (availableIssues.length === 0) {
+            // All issues are displayed, no new issue to add.
+            // You could reset or stop the interval. Here, we just return the current state.
+            return prevIssues;
         }
 
+        const newIssue = availableIssues[Math.floor(Math.random() * availableIssues.length)];
+        
         const newFeed = [newIssue, ...prevIssues];
         return newFeed.slice(0, 5);
       });
@@ -40,8 +46,8 @@ export default function LiveFeed() {
       </CardHeader>
       <CardContent className="flex-grow overflow-auto">
         <div className="space-y-6">
-          {latestIssues.map((issue, index) => (
-            <div key={`${issue.id}-${index}`} className="flex space-x-4">
+          {latestIssues.map((issue) => (
+            <div key={issue.id} className="flex space-x-4">
               <Avatar>
                 <AvatarImage src={`https://avatar.vercel.sh/${issue.reporter.name}.png`} />
                 <AvatarFallback>{issue.reporter.name.charAt(0)}</AvatarFallback>
