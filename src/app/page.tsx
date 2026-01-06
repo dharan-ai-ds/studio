@@ -38,8 +38,8 @@ export default function LoginPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "test@example.com",
+      password: "password",
     },
   });
 
@@ -153,15 +153,12 @@ export default function LoginPage() {
             Sign up
           </Link>
         </p>
-        <div className="mt-4 text-center text-xs text-muted-foreground">
+        <div className="mt-4 rounded-md border border-dashed p-2 text-center text-xs text-muted-foreground">
           <p>
-            For demo, you can use:
-            <br />
-            <span className="font-mono">test@example.com</span> /{" "}
-            <span className="font-mono">password</span>
+            The form is pre-filled with a demo account.
           </p>
           <p className="mt-1">
-            (If the test account doesn't exist, it will be created.)
+            (If the test account doesn't exist, it will be created automatically.)
           </p>
         </div>
       </div>
