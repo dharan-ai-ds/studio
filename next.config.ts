@@ -33,6 +33,12 @@ const nextConfig: NextConfig = {
         hostname: 'media.istockphoto.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img-s-msn-com.akamaized.net',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

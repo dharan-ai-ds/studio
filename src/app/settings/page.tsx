@@ -100,7 +100,7 @@ export default function SettingsPage() {
               >
                 <div className="flex items-center gap-4">
                     <Avatar className="h-20 w-20">
-                        <AvatarImage src="https://media.istockphoto.com/id/2194433569/photo/serious-indian-guy-in-casual-blue-shirt-posing-for-camera.jpg?s=612x612&w=0&k=20&c=_O09lPzGVy7wxAg2E_8F_e_Q-263u69h9I7NaKD7qmI=" alt="Sanjay Gupta" />
+                        <AvatarImage src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1TezLN.img?w=817&h=609&m=4&q=100" alt="Sanjay Gupta" />
                         <AvatarFallback>SG</AvatarFallback>
                     </Avatar>
                     <div className="space-y-1">
