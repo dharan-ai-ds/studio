@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import type { Issue } from "@/lib/types";
 import { MapPin, ThumbsUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface IssueCardProps {
   issue: Issue;
@@ -46,8 +47,8 @@ export function IssueCard({ issue }: IssueCardProps) {
           <ThumbsUp className="h-4 w-4 mr-2" />
           <span className="font-semibold">{issue.upvotes}</span>
         </div>
-        <Button size="sm" variant="outline">
-          View Details
+        <Button size="sm" variant="outline" asChild>
+          <Link href={`/map/${issue.id}`}>View Details</Link>
         </Button>
       </CardFooter>
     </Card>
