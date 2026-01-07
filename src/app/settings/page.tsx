@@ -4,6 +4,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import Image from "next/image";
 
 import { AppLayout } from "@/components/app-layout";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const profileFormSchema = z.object({
   name: z.string().min(2, {
@@ -96,6 +98,16 @@ export default function SettingsPage() {
                 onSubmit={profileForm.handleSubmit(onProfileSubmit)}
                 className="space-y-6"
               >
+                <div className="flex items-center gap-4">
+                    <Avatar className="h-20 w-20">
+                        <AvatarImage src="https://media.istockphoto.com/id/2194433569/photo/serious-indian-guy-in-casual-blue-shirt-posing-for-camera.jpg?s=612x612&w=0&k=20&c=_O09lPzGVy7wxAg2E_8F_e_Q-263u69h9I7NaKD7qmI=" alt="Sanjay Gupta" />
+                        <AvatarFallback>SG</AvatarFallback>
+                    </Avatar>
+                    <div className="space-y-1">
+                        <Button variant="outline" size="sm">Change Photo</Button>
+                        <p className="text-xs text-muted-foreground">JPG, GIF or PNG. 1MB max.</p>
+                    </div>
+                </div>
                 <FormField
                   control={profileForm.control}
                   name="name"
