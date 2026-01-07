@@ -8,6 +8,7 @@ import {
   Map,
   Menu,
   PlusCircle,
+  Settings,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ const navItems = [
   { href: "/", icon: Home, label: "Dashboard" },
   { href: "/map", icon: Map, label: "Smart Map" },
   { href: "/report-issue", icon: PlusCircle, label: "Report Issue" },
+  { href: "/settings", icon: Settings, label: "Settings" },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
