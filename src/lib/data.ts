@@ -1,4 +1,5 @@
 import { Issue, IssueCategory, IssueStatus } from './types';
+import { PlaceHolderImages } from './placeholder-images';
 
 const users = [
   { id: 'user-1', name: 'Arun Kumar' },
@@ -30,6 +31,11 @@ const titles: { [key in IssueCategory]: string[] } = {
 
 const getRandomElement = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 const getRandomDate = (start: Date, end: Date): Date => new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+
+const getPlaceholderImage = (id: string) => {
+  const image = PlaceHolderImages.find(img => img.id === id);
+  return image ? image.imageUrl : `https://picsum.photos/seed/${id}/600/400`;
+}
 
 export const mockIssues: Issue[] = Array.from({ length: 25 }, (_, i) => {
   const category = getRandomElement(Object.keys(titles) as IssueCategory[]);
@@ -63,7 +69,7 @@ mockIssues.unshift(
     reporter: { id: 'user-1', name: 'Arun Kumar' },
     upvotes: 128,
     createdAt: new Date('2024-07-20T09:00:00Z'),
-    imageUrl: 'https://picsum.photos/seed/garbage-marina/600/400',
+    imageUrl: getPlaceholderImage('garbage-marina'),
     imageHint: 'garbage beach'
   },
   {
@@ -76,7 +82,7 @@ mockIssues.unshift(
     reporter: { id: 'user-2', name: 'Priya Sharma' },
     upvotes: 76,
     createdAt: new Date('2024-07-18T22:30:00Z'),
-    imageUrl: 'https://picsum.photos/seed/streetlight-tnagar/600/400',
+    imageUrl: getPlaceholderImage('streetlight-tnagar'),
     imageHint: 'broken streetlight'
   },
   {
@@ -89,7 +95,7 @@ mockIssues.unshift(
     reporter: { id: 'user-3', name: 'Sanjay Gupta' },
     upvotes: 215,
     createdAt: new Date('2024-07-21T14:00:00Z'),
-    imageUrl: 'https://picsum.photos/seed/pothole-annasalai/600/400',
+    imageUrl: getPlaceholderImage('pothole-annasalai'),
     imageHint: 'pothole road'
   },
    {
@@ -102,7 +108,7 @@ mockIssues.unshift(
     reporter: { id: 'user-4', name: 'Anjali Mehta' },
     upvotes: 95,
     createdAt: new Date('2024-07-15T11:00:00Z'),
-    imageUrl: 'https://picsum.photos/seed/waterlogging-velachery/600/400',
+    imageUrl: getPlaceholderImage('waterlogging-velachery'),
     imageHint: 'flooded street'
   },
   {
@@ -115,7 +121,7 @@ mockIssues.unshift(
     reporter: { id: 'user-5', name: 'Vikram Singh' },
     upvotes: 88,
     createdAt: new Date('2024-07-22T18:00:00Z'),
-    imageUrl: 'https://picsum.photos/seed/park-neglect/600/400',
+    imageUrl: getPlaceholderImage('park-neglect'),
     imageHint: 'neglected park'
   },
   {
@@ -128,7 +134,7 @@ mockIssues.unshift(
     reporter: { id: 'user-1', name: 'Arun Kumar' },
     upvotes: 302,
     createdAt: new Date('2024-07-22T08:30:00Z'),
-    imageUrl: 'https://picsum.photos/seed/traffic-congestion/600/400',
+    imageUrl: getPlaceholderImage('traffic-congestion'),
     imageHint: 'traffic jam'
   },
   {
@@ -141,7 +147,7 @@ mockIssues.unshift(
     reporter: { id: 'user-2', name: 'Priya Sharma' },
     upvotes: 150,
     createdAt: new Date('2024-07-21T11:45:00Z'),
-    imageUrl: 'https://picsum.photos/seed/broken-pavement/600/400',
+    imageUrl: getPlaceholderImage('broken-pavement'),
     imageHint: 'broken pavement'
   },
   {
@@ -154,7 +160,7 @@ mockIssues.unshift(
     reporter: { id: 'user-4', name: 'Anjali Mehta' },
     upvotes: 64,
     createdAt: new Date('2024-07-19T16:00:00Z'),
-    imageUrl: 'https://picsum.photos/seed/illegal-parking/600/400',
+    imageUrl: getPlaceholderImage('illegal-parking'),
     imageHint: 'illegal parking'
   }
 );
