@@ -3,41 +3,40 @@
 import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockIssues } from "@/lib/data";
-import { ThumbsUp } from "lucide-react";
+import { getIssues } from "@/lib/issue-actions";
+import { Issue } from "@/lib/types";
+import { ThumbsUp, Loader2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
-// Get the initial set of issues outside the component to ensure it's the same on server and client
-const initialIssues = mockIssues.slice(0, 5);
-
 export default function LiveFeed() {
-  const [latestIssues, setLatestIssues] = useState(initialIssues);
+  const [latestIssues, setLatestIssues] = useState<Issue[]>([]);
+  const [loading, setLoading] = useState(true);
   
-  // This useEffect simulates a live feed by cycling through mock data.
-  // In a real app, this would be a WebSocket or real-time subscription.
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLatestIssues(prevIssues => {
-        // Find an issue from the full mock list that isn't already in the latest issues
-        const availableIssues = mockIssues.filter(
-          mockIssue => !prevIssues.some(latestIssue => latestIssue.id === mockIssue.id)
-        );
-        
-        if (availableIssues.length === 0) {
-            // All issues are displayed, no new issue to add.
-            // You could reset or stop the interval. Here, we just return the current state.
-            return prevIssues;
-        }
+    const fetchIssues = async () => {
+      setLoading(true);
+      const data = await getIssues();
+      setLatestIssues(data.slice(0, 5));
+      setLoading(false);
+    };
 
-        const newIssue = availableIssues[Math.floor(Math.random() * availableIssues.length)];
-        
-        const newFeed = [newIssue, ...prevIssues];
-        return newFeed.slice(0, 5);
-      });
-    }, 5000);
+    fetchIssues();
+
+    // In a real app, you'd use Supabase real-time here.
+    // For now, we'll just fetch once on mount.
+    const interval = setInterval(fetchIssues, 30000); // Refresh every 30 seconds
 
     return () => clearInterval(interval);
   }, []);
+
+  if (loading && latestIssues.length === 0) {
+    return (
+      <Card className="h-full flex flex-col items-center justify-center p-8">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <p className="mt-2 text-sm text-muted-foreground">Loading feed...</p>
+      </Card>
+    );
+  }
 
   return (
     <Card className="h-full flex flex-col">

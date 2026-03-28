@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   Line,
   LineChart,
@@ -9,23 +10,27 @@ import {
   YAxis,
   CartesianGrid,
 } from "recharts";
-import { subMonths, format } from "date-fns";
-
-import { mockIssues } from "@/lib/data";
-
-const data = Array.from({ length: 6 }, (_, i) => {
-  const date = subMonths(new Date(), 5 - i);
-  return {
-    name: format(date, "MMM"),
-    total: mockIssues.filter(
-      (issue) =>
-        issue.createdAt.getMonth() === date.getMonth() &&
-        issue.createdAt.getFullYear() === date.getFullYear()
-    ).length,
-  };
-});
+import { subMonths, format, isSameMonth } from "date-fns";
+import { getIssues } from "@/lib/issue-actions";
 
 export default function IssueTrendsChart() {
+  const [data, setData] = useState<{ name: string; total: number }[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const issues = await getIssues();
+      const chartData = Array.from({ length: 6 }, (_, i) => {
+        const date = subMonths(new Date(), 5 - i);
+        return {
+          name: format(date, "MMM"),
+          total: issues.filter((issue) => isSameMonth(new Date(issue.createdAt), date)).length,
+        };
+      });
+      setData(chartData);
+    }
+    fetchData();
+  }, []);
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart

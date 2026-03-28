@@ -1,19 +1,43 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockIssues } from "@/lib/data";
+import { getIssues } from "@/lib/issue-actions";
+import { Issue } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
-import { BarChart, CheckCircle, Clock, ListTodo } from "lucide-react";
+import { BarChart, CheckCircle, Clock, ListTodo, Loader2 } from "lucide-react";
 
 export default function KpiCards() {
-  const totalIssues = mockIssues.length;
-  const resolvedIssues = mockIssues.filter(
+  const [issues, setIssues] = useState<Issue[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      setLoading(true);
+      const data = await getIssues();
+      setIssues(data);
+      setLoading(false);
+    };
+    fetchStats();
+  }, []);
+
+  const totalIssues = issues.length;
+  const resolvedIssues = issues.filter(
     (issue) => issue.status === "Resolved"
   ).length;
-  const openIssues = mockIssues.filter(
+  const openIssues = issues.filter(
     (issue) => issue.status === "Open"
   ).length;
 
-  // Dummy calculation for average resolution time
-  const avgResolutionTime = 3.5;
+  const avgResolutionTime = 3.5; // Still mock for now as we don't have resolution date
+
+  if (loading) {
+     return (
+        <div className="col-span-full flex justify-center py-4">
+           <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        </div>
+     )
+  }
 
   return (
     <>

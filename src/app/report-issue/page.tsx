@@ -28,6 +28,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { IssueCategory } from "@/lib/types";
+import { createIssue } from "@/lib/issue-actions";
 import { suggestIssueCategory } from "@/ai/flows/suggest-issue-category";
 
 const formSchema = z.object({
@@ -73,19 +74,35 @@ export default function ReportIssuePage() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    console.log(values);
-
-    // Simulate API call
-    setTimeout(() => {
-      toast({
-        title: "Issue Reported!",
-        description: "Thank you for helping improve our community.",
+    
+    try {
+      const result = await createIssue({
+        title: values.title,
+        description: values.description,
+        category: values.category as IssueCategory,
+        location: values.location,
       });
-      form.reset();
+
+      if (result.success) {
+        toast({
+          title: "Issue Reported!",
+          description: "Thank you for helping improve our community. Your report has been saved to our database.",
+        });
+        form.reset();
+      } else {
+        throw new Error(result.error);
+      }
+    } catch (error: any) {
+      toast({
+        title: "Submission Failed",
+        description: error.message || "There was an error saving your report. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   }
 
   async function handleSuggestCategory() {

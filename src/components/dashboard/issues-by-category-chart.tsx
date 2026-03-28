@@ -1,19 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
-
-import { mockIssues } from "@/lib/data";
+import { getIssues } from "@/lib/issue-actions";
 import { IssueCategory } from "@/lib/types";
-
-const categoryCounts = mockIssues.reduce((acc, issue) => {
-  acc[issue.category] = (acc[issue.category] || 0) + 1;
-  return acc;
-}, {} as Record<IssueCategory, number>);
-
-const data = Object.entries(categoryCounts).map(([name, value]) => ({
-  name,
-  value,
-}));
 
 const COLORS = [
   "hsl(var(--chart-1))",
@@ -25,6 +15,25 @@ const COLORS = [
 ];
 
 export default function IssuesByCategoryChart() {
+  const [data, setData] = useState<{ name: string; value: number }[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const issues = await getIssues();
+      const categoryCounts = issues.reduce((acc, issue) => {
+        acc[issue.category] = (acc[issue.category] || 0) + 1;
+        return acc;
+      }, {} as Record<IssueCategory, number>);
+
+      const chartData = Object.entries(categoryCounts).map(([name, value]) => ({
+        name,
+        value,
+      }));
+      setData(chartData);
+    }
+    fetchData();
+  }, []);
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart>
